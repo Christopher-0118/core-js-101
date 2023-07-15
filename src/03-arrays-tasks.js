@@ -401,8 +401,8 @@ function findAllOccurences(arr, item) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  return arr.join(',');
 }
 
 
@@ -432,8 +432,26 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((current, next) => {
+    if (current.country > next.country) {
+      return 1;
+    }
+    if (current.country < next.country) {
+      return -1;
+    }
+    return 0;
+  }).sort((current, next) => {
+    if (current.country === next.country) {
+      if (current.city > next.city) {
+        return 1;
+      }
+      if (current.city < next.city) {
+        return -1;
+      }
+    }
+    return 0;
+  });
 }
 
 /**
@@ -455,7 +473,7 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+  // return Array(n).fill(Array(n))
 }
 
 /**
