@@ -513,7 +513,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-  return arr.filter((element, index) => arr.indexOf(element) === index);
+  return [...new Set(arr)]; // arr.filter((element, index) => arr.indexOf(element) === index);
 }
 
 /**
@@ -546,8 +546,15 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const map = new Map();
+  array.map((element) => {
+    if (map.has(keySelector(element))) {
+      return map.get(keySelector(element)).push(valueSelector(element));
+    }
+    return map.set(keySelector(element), [valueSelector(element)]);
+  });
+  return map;
 }
 
 
@@ -564,8 +571,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map((element) => childrenSelector(element)).flat();
 }
 
 
@@ -581,8 +588,11 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  // const index = indexes.reduce((accumulator, element) => accumulator + element, 0);
+  // const array = arr.flat(Infinity);
+  // return array[index];
+  return arr.flat(Infinity)[indexes.reduce((accumulator, element) => accumulator + element, 0)];
 }
 
 
@@ -604,8 +614,14 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const firstPart = arr.slice(0, Math.floor(arr.length / 2));
+  const secondPart = arr.slice(Math.round(arr.length / 2));
+  if (arr.length % 2) {
+    const arrMiddle = arr[Math.floor(arr.length / 2)];
+    return secondPart.concat(arrMiddle).concat(firstPart);
+  }
+  return secondPart.concat(firstPart);
 }
 
 
