@@ -21,13 +21,10 @@
  *    console.log(r.getArea());   // => 200
  */
 function Rectangle(width, height) {
-  const getArea = function () {
+  this.width = width || 0;
+  this.height = height || 0;
+  this.getArea = function () {
     return width * height;
-  };
-  return {
-    width,
-    height,
-    getArea,
   };
 }
 
@@ -118,6 +115,45 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
+// const cssSelectorBuilder = {
+//   // cssSelector: {},
+//   // element(value) {
+//   //   cssSelector.element = value || '';
+//   //   return { element: value };
+//   //   throw new Error('Not implemented');
+//   // },
+
+//   // id(value) {
+//   //   cssSelector.id = `#${value}`;
+//   // },
+
+//   // class(value) {
+//   //   cssSelector.class = `.${value}`;
+//   // },
+
+//   // attr(value) {
+//   //   cssSelector.attr = `[${value}]`;
+//   // },
+
+//   // pseudoClass(value) {
+//   //   cssSelector.pseudoClass = `:${value}`;
+//   // },
+
+//   // pseudoElement(value) {
+//   //   cssSelector.pseudoElement = `::${value}`;
+//   // },
+
+//   // combine(selector1, combinator, selector2) {
+//   //   cssSelector.combine = ` ${combinator} `;
+//   //   return `${selector1} ${combinator} ${selector2}`;
+//   // },
+
+//   // stringify() {
+//   //   console.log(cssSelector);
+//   //   return Object.values(cssSelector).join('');
+//   // },
+// };
+
 const cssSelectorBuilder = {
   element(/* value */) {
     throw new Error('Not implemented');
@@ -147,7 +183,6 @@ const cssSelectorBuilder = {
     throw new Error('Not implemented');
   },
 };
-
 
 module.exports = {
   Rectangle,
