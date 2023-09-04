@@ -27,8 +27,17 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  if (!(num % 3) && !(num % 5)) {
+    return 'FizzBuzz';
+  }
+  if (!(num % 3)) {
+    return 'Fizz';
+  }
+  if (!(num % 5)) {
+    return 'Buzz';
+  }
+  return num;
 }
 
 
@@ -43,8 +52,15 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  let result = 1;
+  let num = n;
+
+  while (num > 1) {
+    result *= num;
+    num -= 1;
+  }
+  return result;
 }
 
 
@@ -60,8 +76,14 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let result = 0;
+  let lLimit = n1;
+  const uLimit = n2;
+  for (lLimit = n1; lLimit <= uLimit; lLimit += 1) {
+    result += lLimit;
+  }
+  return result;
 }
 
 
@@ -80,8 +102,8 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  return (a + b) > c && (a + c) > b && (b + c) > a;
 }
 
 
@@ -117,8 +139,36 @@ function isTriangle(/* a, b, c */) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  let nearestRectangle;
+  let furtherRectangle;
+
+  // i'll take coords of diagonals
+  const rect1Coords = [[rect1.top, rect1.left],
+    [rect1.top + rect1.width, rect1.left + rect1.height]];
+  const rect2Coords = [[rect2.top, rect2.left],
+    [rect2.top + rect2.width, rect2.left + rect2.height]];
+
+  // calculate which rectangle closer to [0, 0]
+  const dist1 = Math.sqrt(rect1.top ** 2 + rect1.left ** 2);
+  const dist2 = Math.sqrt(rect2.top ** 2 + rect2.left ** 2);
+
+  if (dist1 <= dist2) {
+    nearestRectangle = rect1Coords;
+    furtherRectangle = rect2Coords;
+  } else {
+    nearestRectangle = rect2Coords;
+    furtherRectangle = rect1Coords;
+  }
+
+  // check is the coordinates of the first rectangle include points of second rectangle
+  if ((nearestRectangle[0][0] <= furtherRectangle[0][0]
+    && furtherRectangle[0][0] <= nearestRectangle[1][0])
+    && (nearestRectangle[0][1] <= furtherRectangle[0][1]
+    && furtherRectangle[0][1] <= nearestRectangle[1][1])) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -148,8 +198,9 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const hypotenuse = Math.sqrt((point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2);
+  return circle.radius > hypotenuse;
 }
 
 
@@ -164,8 +215,17 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const length = str.length - 1;
+  let char = 0;
+
+  while (char < length) {
+    if (str.indexOf(str.charAt(char)) === str.lastIndexOf(str.charAt(char))) {
+      return str.charAt(char);
+    }
+    char += 1;
+  }
+  return null;
 }
 
 
