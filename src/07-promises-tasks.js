@@ -100,13 +100,22 @@ function getFastestPromise(array) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
-  // const promise = new Promise((resolve) => {
-  //   resolve(array.map((element) => Promise.resolve(action(element))));
-  // });
-  // promise.catch();
-  // return promise;
+// async function chainPromises(array, action) {
+//   let result;
+//   try {
+//     result = await array.map((promise) => promise
+//       .then((resolve) => resolve));
+//   } catch (err) {
+//     console.log(result, err);
+//   }
+//   return result.reduce(action);
+// }
+async function chainPromises(array, action) {
+  const result = [];
+  await array.forEach((promise) => promise
+    .then((resolve) => result.push(resolve))
+    .catch((err) => new Error(err)));
+  return result.reduce(action);
 }
 
 module.exports = {
