@@ -62,8 +62,20 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...args) {
+  const arrArguments = args;
+  return (x) => {
+    let result = 0;
+    let power = arrArguments.length - 1;
+    if (!arrArguments.length) {
+      return null;
+    }
+    for (let coeffIdx = 0; coeffIdx < arrArguments.length; coeffIdx += 1) {
+      result += arrArguments[coeffIdx] * x ** (power);
+      power -= 1;
+    }
+    return result;
+  };
 }
 
 
@@ -81,8 +93,9 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  const fn = func();
+  return () => fn;
 }
 
 
@@ -101,8 +114,14 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return () => {
+    try {
+      return func();
+    } catch (err) {
+      return retry(func, attempts)();
+    }
+  };
 }
 
 
@@ -129,8 +148,14 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return (...args) => {
+    const log = `${func.name}(${args.map((element) => JSON.stringify(element))})`;
+    logFunc(log.concat(' starts'));
+    const result = func(...args);
+    logFunc(log.concat(' ends'));
+    return result;
+  };
 }
 
 
@@ -147,8 +172,8 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...args2) => fn(...args1, ...args2);
 }
 
 
