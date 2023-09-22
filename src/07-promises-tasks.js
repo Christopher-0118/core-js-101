@@ -100,16 +100,6 @@ function getFastestPromise(array) {
  *    });
  *
  */
-// async function chainPromises(array, action) {
-//   let result;
-//   try {
-//     result = await array.map((promise) => promise
-//       .then((resolve) => resolve));
-//   } catch (err) {
-//     console.log(result, err);
-//   }
-//   return result.reduce(action);
-// }
 async function chainPromises(array, action) {
   const result = [];
   await array.forEach((promise) => promise
